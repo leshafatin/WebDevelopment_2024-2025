@@ -31,22 +31,39 @@
       area {
         cursor: pointer;
       }
+
+      img {
+        transition: transform .5s ease-in-out;
+        transform: rotate(0deg)
+      }
     </style>
   </head>
   <body>
     <h1>Этот документ отправлен сервером, написанным на NodeJS + Express</h1>
-    <img src="./photo.jpg" alt="kitten" usemap="#map" />
+    <img id="img" src="./photo.jpg" alt="kitten" usemap="#map" />
     <map name="map">
-        <area onclick="changePageColor('#0D160B')" target="" alt="" title="" href="#" coords="185,381,55" shape="circle"></area>
-        <area onclick="changePageColor('#785589')" target="" alt="" title="" href="#" coords="404,384,41" shape="circle"></area>
+        <area onclick="rotateImage('counterclockwise')" target="" alt="" title="" href="#" coords="185,381,55" shape="circle"></area>
+        <area onclick="rotateImage('clockwise')" target="" alt="" title="" href="#" coords="404,384,41" shape="circle"></area>
         <area onclick="changePageColor('#977390')" target="" alt="" title="" href="#" coords="390,213,37" shape="circle"></area>
-        <area onclick="changePageColor('#AC7B7D')" target="" alt="" title="" href="#" coords="208,78,246,89,336,95,386,74,391,162,352,185,343,226,312,239,262,237,242,215" shape="poly"></area>
+        <area target="" alt="" title="" href="https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%88%D0%BA%D0%B0" coords="208,78,246,89,336,95,386,74,391,162,352,185,343,226,312,239,262,237,242,215" shape="poly"></area>
         <area onclick="changePageColor('#BB8A89')" target="" alt="" title="" href="#" coords="155,174,225,242" shape="rect"></area>
     </map>
 
     <script>
+       let timer = null
         const changePageColor = (color) => {
             document.body.style.background = color
+        }
+
+        const rotateImage = (direction) => {
+          if (timer) return;
+
+          const rotateAngle = direction === 'clockwise' ? '360deg' : '-360deg';
+          img.style = `transform: rotate(${rotateAngle})`;
+          timer = setTimeout(() => {
+            img.style = ''
+            timer = null
+          }, 1000)
         }
     </script>
   </body>
